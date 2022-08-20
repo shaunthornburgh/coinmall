@@ -1,8 +1,19 @@
 import {Newsfeed} from "../Newsfeed";
 import {Stats} from "../Stats";
-import React from "react";
+import React, {useEffect, useState, useContext} from "react";
+import AuthContext from "../../context/authContext";
+import {useNavigate} from "react-router-dom";
 
 export const Home = () => {
+    const {authData} = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!authData.signedIn) {
+            navigate('/login');
+        }
+    }, []);
+
     return (
         <main className="-mt-24 pb-8 mb-auto">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">

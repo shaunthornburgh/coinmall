@@ -6,10 +6,11 @@ const BASE_URL = 'https://api.coincap.io/v2';
 
 export const Stats = () => {
     const [coinData, setCoinData] = useState([]);
-
+    const [favourites, setFavourites] = useState([]);
+    
     const getCoinData = (coin) => {
         return axios
-            .get(`${BASE_URL}/assets/${coin}`)
+            .get(`${BASE_URL}/assets/${coin}`, { withCredentials: false })
             .catch((error) => {
                 console.log(error)
             })

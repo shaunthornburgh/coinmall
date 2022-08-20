@@ -1,7 +1,44 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Link} from "react-router-dom"
+import AuthContext from "../context/authContext";
+import {useAuth} from "../hooks/useAuth";
 
 export const Header = () => {
+    const {authData} = useContext(AuthContext);
+    const {setLogout} = useAuth();
+
+    const renderLinks = () => {
+        if(!authData.signedIn) {
+            return (
+                <>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/login">Login</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/register">Register</Link>
+                    </li>
+                </>
+            )
+        }
+        return (
+            <>
+                <li className="nav-item">
+                    <a className="nav-link" href="">Hi {authData.user.name}</a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link" href="#" onClick={handleLogout}>Logout</a>
+                </li>
+            </>
+        )
+    }
+    const handleLogout = () => {
+        axios.post('/api/logout').then(response => {
+            setLogout();
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
     return (
         <header className="pb-24 ">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -98,6 +135,7 @@ export const Header = () => {
                                    className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10" to="/"> Portfolio </Link>
                                 <Link
                                    className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10" to="/login"> Login </Link>
+                                { renderLinks() }
                             </nav>
                         </div>
                         <div>
