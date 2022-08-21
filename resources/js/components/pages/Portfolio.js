@@ -4,7 +4,7 @@ import React, {useEffect, useState, useContext} from "react";
 import AuthContext from "../../context/authContext";
 import {useNavigate} from "react-router-dom";
 
-export const Home = () => {
+export const Portfolio = () => {
     const {authData} = useContext(AuthContext);
     const navigate = useNavigate();
 

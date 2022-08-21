@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import axios from "axios";
-import {StatsRow} from "./StatsRow";
+import {PortfolioRow} from "./PortfolioRow";
+import AuthContext from "../context/authContext";
 
-const BASE_URL = 'https://api.coincap.io/v2';
-
-export const Stats = () => {
+export const PortfolioList = () => {
+    const BASE_URL = 'https://api.coincap.io/v2';
+    const {authData} = useContext(AuthContext);
     const [coinData, setCoinData] = useState([]);
-    const [favourites, setFavourites] = useState([]);
-    
+
     const getCoinData = (coin) => {
         return axios
             .get(`${BASE_URL}/assets/${coin}`, { withCredentials: false })
@@ -17,8 +17,13 @@ export const Stats = () => {
     }
 
     useEffect(()=>{
+        const coinList = [];
+        if (authData.user) {
+            authData.user.data.coins.map(value => {
+                coinList.push(value.name)
+            });
+        }
         let tmpCoinData = [];
-        const coinList = ["bitcoin", "ethereum", "tether", "usd-coin", "binance-coin", "cardano", "binance-usd", "xrp", "solana", "dogecoin"];
         let promises = [];
 
         coinList.map((coin) => {
@@ -40,7 +45,6 @@ export const Stats = () => {
     return (
         <div className="grid grid-cols-1 gap-4">
             <section aria-labelledby="section-2-title">
-
                 <div className="rounded-lg bg-gray-700 overflow-hidden shadow">
                     <div className="flex flex-col">
                         <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -48,15 +52,15 @@ export const Stats = () => {
                                 <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                                     <table className="min-w-full divide-y divide-gray-600">
                                         <thead className="bg-gray-50">
-                                        <tr>
-                                            <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white bg-gray-700 sm:pl-6">
-                                                Coins
-                                            </th>
-                                        </tr>
+                                            <tr>
+                                                <th scope="col" colSpan="4" className="col-span-2 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white bg-gray-700 sm:pl-6">
+                                                    My Portfolio
+                                                </th>
+                                            </tr>
                                         </thead>
                                         <tbody className="divide-y divide-gray-600">
                                             {coinData.map((coin) => (
-                                                <StatsRow
+                                                <PortfolioRow
                                                     key={coin.name}
                                                     name={coin.name}
                                                     symbol={coin.symbol}

@@ -23,7 +23,7 @@ export const Header = () => {
         return (
             <>
                 <li className="nav-item">
-                    <a className="nav-link" href="">Hi {authData.user.name}</a>
+                    <a className="nav-link" href="">Hi {authData.user.data.name}</a>
                 </li>
                 <li className="nav-item">
                     <a className="nav-link" href="#" onClick={handleLogout}>Logout</a>
@@ -130,9 +130,9 @@ export const Header = () => {
                                 <Link
                                    className="text-white text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10" aria-current="/" to="/"> Home </Link>
                                 <Link
-                                   className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10" to="/"> Market </Link>
+                                   className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10" to="/markets"> Markets </Link>
                                 <Link href="#"
-                                   className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10" to="/"> Portfolio </Link>
+                                   className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10" to="/portfolio"> Portfolio </Link>
                                 <Link
                                    className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10" to="/login"> Login </Link>
                                 { renderLinks() }

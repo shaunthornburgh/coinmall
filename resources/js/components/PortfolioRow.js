@@ -1,13 +1,13 @@
 import React from "react";
 import Chart from '../img/chart.svg';
 
-export const StatsRow = (props) => {
+export const PortfolioRow = (props) => {
     const percentage = ((props.price - props.openPrice)/props.openPrice) * 100;
     const color = (Math.sign(percentage) === 1 ? '02cd97' : 'f4918f')
     const sign = (Math.sign(percentage) === 1 ? '+' : ' ')
 
     return (
-        <tr key={props.name}  className="hover:bg-gray-600">
+        <tr key={props.name} className="hover:bg-gray-600">
             <td className="whitespace-nowrap py-4 pl-6">
                 <img className="h-10 w-10 rounded-full" src={'https://assets.coincap.io/assets/icons/' + props.symbol.toLowerCase() + '@2x.png'} alt="" />
             </td>
@@ -25,5 +25,3 @@ export const StatsRow = (props) => {
         </tr>
     )
 }
-
-export default StatsRow

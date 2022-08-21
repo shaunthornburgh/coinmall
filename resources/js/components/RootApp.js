@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {Layout} from "./Layout";
 import {Home} from "./pages/Home";
+import {Markets} from "./pages/Markets";
 import {Login} from "./pages/Login";
 import {Register} from "./pages/Register";
 import {useAuth} from "../hooks/useAuth";
 import AuthContext from "../context/authContext";
+import {Portfolio} from "./pages/Portfolio";
 
 function RootApp() {
     const {userData} = useAuth();
@@ -17,6 +19,8 @@ function RootApp() {
             <Layout>
                 <Routes>
                     <Route path="/" element={<Home /> } />
+                    <Route path="/markets" element={<Markets /> } />
+                    <Route path="/portfolio" element={<Portfolio /> } />
                     <Route path="/login" element={<Login /> } />
                     <Route path="/register" element={<Register /> } />
                 </Routes>
