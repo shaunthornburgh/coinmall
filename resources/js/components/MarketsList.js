@@ -12,7 +12,7 @@ export const MarketsList = () => {
             try {
                 const response = await axios.get(
                     `https://api.coincap.io/v2/assets`,
-                                    { withCredentials: false }
+                    { withCredentials: false }
                 );
                 setData(response.data.data);
                 setError(null);
@@ -60,6 +60,7 @@ export const MarketsList = () => {
                                     data.map(({ id, name, symbol, priceUsd, changePercent24Hr, marketCapUsd }) => (
                                         <MarketsRow
                                             key={id}
+                                            id={id}
                                             name={name}
                                             symbol={symbol}
                                             price={priceUsd}

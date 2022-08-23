@@ -1,4 +1,5 @@
 import React from "react";
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 
 export const MarketsRow = (props) => {
     return (
@@ -27,7 +28,7 @@ export const MarketsRow = (props) => {
                 <div className="text-gray-200">${Math.abs(Number(props.marketCap) / 1.0e+6).toFixed(2)}M</div>
             </td>
             <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                <a href="#" className="text-white hover:text-white">Details</a>
+                <Link className="text-white hover:text-white" to={"/coin/" + props.id + "/"}>Details</Link>
             </td>
         </tr>
     )
