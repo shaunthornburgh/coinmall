@@ -2,10 +2,8 @@ import React, {useState, useEffect, useContext} from "react";
 import axios from "axios";
 import {PortfolioRow} from "./PortfolioRow";
 import AuthContext from "../context/authContext";
-import {useAxios} from "../hooks/useAxios";
 
 export const PortfolioList = () => {
-    const BASE_URL = 'https://api.coincap.io/v2';
     const {authData} = useContext(AuthContext);
     const [coinData, setCoinData] = useState([]);
 

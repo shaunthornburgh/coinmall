@@ -3,7 +3,7 @@ import {MarketsRow} from "./MarketsRow";
 import React from "react";
 
 export const MarketsList = () => {
-    const { response, loading, error } = useAxios('coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false');
+    const { response, loading, error } = useAxios('/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false');
 
     return (
         <div className="mt-8 flex flex-col">
