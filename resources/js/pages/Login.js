@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
-import {useForm} from "../../hooks/useForm";
-import {useAuth} from "../../hooks/useAuth";
-import AuthContext from "../../context/authContext";
+import {useForm} from "../hooks/useForm";
+import {useAuth} from "../hooks/useAuth";
+import AuthContext from "../context/authContext";
 import {Link} from "react-router-dom"
 
 export const Login = (props) => {
@@ -13,7 +13,7 @@ export const Login = (props) => {
 
     useEffect(() => {
         if (!authData.signedIn) {
-            navigate('/');
+            navigate('/markets');
         }
     }, []);
 
@@ -23,13 +23,12 @@ export const Login = (props) => {
         e.preventDefault();
         setErrors(null);
         setMessage('');
-        // make request first to sanctum/csrf-cookie
         axios.get('/sanctum/csrf-cookie').then(() => {
             const payload = {
                 email,
                 password
             };
-            if(remember) {
+            if (remember) {
                 payload.remember = true;
             }
             axios.post('/api/login', payload, {
@@ -37,13 +36,10 @@ export const Login = (props) => {
                     'Accept': 'application/json'
                 }
             }).then(response => {
-
                 if(response.data) {
-                    alert("Login success");
                     setAsLogged(response.data);
                 }
             }).catch(error => {
-                console.log(error);
                 if(error.response) {
                     if (error.response.data.message) {
                         setMessage(error.response.data.message);

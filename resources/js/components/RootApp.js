@@ -2,14 +2,13 @@ import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import {Layout} from "./Layout";
-import {Home} from "./pages/Home";
-import {Markets} from "./pages/Markets";
-import {Login} from "./pages/Login";
-import {Register} from "./pages/Register";
+import {Markets} from "../pages/Markets";
+import {Login} from "../pages/Login";
+import {Register} from "../pages/Register";
 import {useAuth} from "../hooks/useAuth";
 import AuthContext from "../context/authContext";
-import {Portfolio} from "./pages/Portfolio";
-import {Coin} from "./pages/Coin";
+import {Portfolio} from "../pages/Portfolio";
+import {Coin} from "../pages/Coin";
 
 function RootApp() {
     const {userData} = useAuth();
@@ -19,7 +18,6 @@ function RootApp() {
         <AuthContext.Provider value={{authData, setAuthData }}>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<Home /> } />
                     <Route path="/markets" element={<Markets /> } />
                     <Route path="/portfolio" element={<Portfolio /> } />
                     <Route path="/login" element={<Login /> } />

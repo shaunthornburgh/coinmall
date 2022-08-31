@@ -1,30 +1,9 @@
-import React, {useEffect, useState} from "react";
-import axios from "axios";
+import {useAxios} from "../hooks/useAxios"
 import {MarketsRow} from "./MarketsRow";
+import React from "react";
 
 export const MarketsList = () => {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const response = await axios.get(
-                    `https://api.coincap.io/v2/assets`,
-                    { withCredentials: false }
-                );
-                setData(response.data.data);
-                setError(null);
-            } catch (err) {
-                setError(err.message);
-                setData(null);
-            } finally {
-                setLoading(false);
-            }
-        };
-        getData();
-    }, []);
+    const { response, loading, error } = useAxios('coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false');
 
     return (
         <div className="mt-8 flex flex-col">
@@ -33,7 +12,7 @@ export const MarketsList = () => {
                     <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                         {loading && <div>A moment please...</div>}
                         {error && (
-                            <div>{`There is a problem fetching the post data - ${error}`}</div>
+                            <div>{`There is a problem fetching the data - ${error}`}</div>
                         )}
                         <table className="min-w-full divide-y divide-gray-600 bg-gray-700">
                             <thead className="bg-gray-700">
@@ -56,18 +35,13 @@ export const MarketsList = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-600">
-                                {data &&
-                                    data.map(({ id, name, symbol, priceUsd, changePercent24Hr, marketCapUsd }) => (
+                                {response &&
+                                    response.map(coin =>
                                         <MarketsRow
-                                            key={id}
-                                            id={id}
-                                            name={name}
-                                            symbol={symbol}
-                                            price={priceUsd}
-                                            change={changePercent24Hr}
-                                            marketCap={marketCapUsd}
+                                            key={coin.id}
+                                            coin={coin}
                                         />
-                                    ))}
+                                    )}
                             </tbody>
                         </table>
                     </div>

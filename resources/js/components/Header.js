@@ -4,35 +4,29 @@ import AuthContext from "../context/authContext";
 import {useAuth} from "../hooks/useAuth";
 
 export const Header = () => {
+    const appUrl = process.env.MIX_APP_URL;
     const {authData} = useContext(AuthContext);
     const {setLogout} = useAuth();
 
     const renderLinks = () => {
-        if(!authData.signedIn) {
+        if (!authData.signedIn) {
             return (
                 <>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/login">Login</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/register">Register</Link>
-                    </li>
+                    <a href="/login" className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10"> Login </a>
+                    <a href="/register" className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10"> Register </a>
                 </>
             )
         }
         return (
             <>
-                <li className="nav-item">
-                    <a className="nav-link" href="">Hi {authData.user.data.name}</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="#" onClick={handleLogout}>Logout</a>
-                </li>
+                <a className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10" href="#" onClick={handleLogout}>Logout</a>
+                <span className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2">Welcome back {authData.user.data.name}!</span>
             </>
         )
     }
+
     const handleLogout = () => {
-        axios.post('/api/logout').then(response => {
+        axios.post(appUrl + '/api/logout').then(response => {
             setLogout();
         }).catch(err => {
             console.log(err);
@@ -128,13 +122,9 @@ export const Header = () => {
                         <div className="col-span-2">
                             <nav className="flex space-x-4">
                                 <Link
-                                   className="text-white text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10" aria-current="/" to="/"> Home </Link>
-                                <Link
                                    className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10" to="/markets"> Markets </Link>
                                 <Link href="#"
                                    className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10" to="/portfolio"> Portfolio </Link>
-                                <Link
-                                   className="text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10" to="/login"> Login </Link>
                                 { renderLinks() }
                             </nav>
                         </div>
@@ -188,8 +178,6 @@ export const Header = () => {
                                 </div>
                             </div>
                             <div className="mt-3 px-2 space-y-1">
-                                <a href="#"
-                                   className="block rounded-md px-3 py-2 text-base text-gray-900 font-medium hover:bg-gray-100 hover:text-gray-800">Home</a>
                                 <a href="#"
                                    className="block rounded-md px-3 py-2 text-base text-gray-900 font-medium hover:bg-gray-100 hover:text-gray-800">Profile</a>
                                 <a href="#"

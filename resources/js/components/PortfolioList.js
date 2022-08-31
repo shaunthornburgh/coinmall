@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from "react";
 import axios from "axios";
 import {PortfolioRow} from "./PortfolioRow";
 import AuthContext from "../context/authContext";
+import {useAxios} from "../hooks/useAxios";
 
 export const PortfolioList = () => {
     const BASE_URL = 'https://api.coincap.io/v2';
@@ -10,7 +11,10 @@ export const PortfolioList = () => {
 
     const getCoinData = (coin) => {
         return axios
-            .get(`${BASE_URL}/assets/${coin}`, { withCredentials: false })
+            .get(
+                `https://api.coingecko.com/api/v3/coins/${coin}`,
+                { withCredentials: false }
+            )
             .catch((error) => {
                 console.log(error)
             })
@@ -31,7 +35,7 @@ export const PortfolioList = () => {
                 getCoinData(coin)
                     .then((res) => {
                         tmpCoinData.push({
-                            ...res.data.data
+                            ...res.data
                         });
                     })
             )
@@ -61,11 +65,8 @@ export const PortfolioList = () => {
                                         <tbody className="divide-y divide-gray-600">
                                             {coinData.map((coin) => (
                                                 <PortfolioRow
-                                                    key={coin.name}
-                                                    name={coin.name}
-                                                    symbol={coin.symbol}
-                                                    price={coin.priceUsd}
-                                                    openPrice={coin.vwap24Hr}
+                                                    key={coin.id}
+                                                    coin={coin}
                                                 />
                                             ))}
                                         </tbody>

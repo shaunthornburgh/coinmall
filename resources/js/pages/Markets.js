@@ -1,4 +1,4 @@
-import {MarketsList} from "../MarketsList";
+import {MarketsList} from "../components/MarketsList";
 import React from "react";
 
 export const Markets = () => {

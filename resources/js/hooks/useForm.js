@@ -6,7 +6,7 @@ export const useForm = () => {
     const [errors, setErrors] = useState(null);
     const [message, setMessage] = useState('');
     function renderFieldError(field) {
-        if(errors && errors.hasOwnProperty(field)) {
+        if (errors && errors.hasOwnProperty(field)) {
             return errors[field][0] ? (
                 <span className="invalid-feedback" role="alert"><strong>{errors[field][0]}</strong></span>
             ) : null;

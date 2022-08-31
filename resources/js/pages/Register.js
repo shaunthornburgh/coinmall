@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom"
-import {useForm} from "../../hooks/useForm";
+import {useForm} from "../hooks/useForm";
 
 export const Register = () => {
     const [name, setName] = useState('');
@@ -18,13 +18,11 @@ export const Register = () => {
             password,
             password_confirmation: passwordConfirmation
         }).then(response => {
-            console.log(response.data);
-            if(response.data) {
+            if (response.data) {
                 alert("Register success");
                 navigate('/login');
             }
         }).catch(error => {
-            console.log(error);
             if(error.response) {
                 if (error.response.data.errors) {
                     setErrors(error.response.data.errors);

@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import AuthContext from "../context/authContext";
 
 export const useAuth = () => {
+    const appUrl = process.env.MIX_APP_URL;
     let navigate = useNavigate();
     const [userData, setUserdata] = React.useState({signedIn: false, user: null});
     const {setAuthData} = useContext(AuthContext);
@@ -22,7 +23,7 @@ export const useAuth = () => {
         const cookie = new Cookies();
         cookie.set('is_auth', true, {path: '/', expires: getAuthCookieExpiration(), sameSite: 'lax', httpOnly: false});
         setUserdata({signedIn: true, user});
-        navigate('/');
+        navigate('/markets');
     }
 
     function setLogout() {
@@ -34,17 +35,15 @@ export const useAuth = () => {
 
     function loginUserOnStartup() {
         const cookie = new Cookies();
-        if(cookie.get('is_auth')) {
-            axios.post('/api/me').then(response => {
+        if (cookie.get('is_auth')) {
+            axios.post(appUrl + '/api/me').then(response => {
                 setUserdata({signedIn: true, user: response.data});
-                navigate('/');
             }).catch(error => {
                 setUserdata({signedIn: false, user: null});
                 setLogout();
             });
         } else {
             setUserdata({signedIn: false, user: null});
-            navigate('/login');
         }
     }
 
