@@ -2,13 +2,15 @@ import {Newsfeed} from "../components/Newsfeed";
 import {PortfolioList} from "../components/PortfolioList";
 import React, {useEffect, useState, useContext} from "react";
 import AuthContext from "../context/authContext";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useAxios} from "../hooks/useAxios";
 
 export const Portfolio = () => {
     const {authData} = useContext(AuthContext);
     const navigate = useNavigate();
     let coin = null;
+    let { id, timeFrame } = useParams();
+    let days = null;
 
     useEffect(() => {
         if (!authData.signedIn) {
@@ -17,8 +19,13 @@ export const Portfolio = () => {
     }, []);
 
     if (authData.signedIn) {
-        const { response, loading , error } = useAxios(`/coins/${authData.user.data.coins[0].name}`);
-        coin = response;
+        if (id) {
+            days = id
+        } else {
+            days = authData.user.data.coins[0].name
+        }
+        const { response, loading , error } = useAxios(`/coins/${days}`, [id]);
+        coin = response
     }
 
     if (authData.signedIn) {
@@ -34,8 +41,9 @@ export const Portfolio = () => {
                     <div className="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
                         {authData.signedIn && authData.user && coin && (
                             <Newsfeed
-                                key={authData.user.data.coins[0].id}
+                                key={coin.id}
                                 coin={coin}
+                                page='portfolio'
                             />
                         )}
                         <PortfolioList/>

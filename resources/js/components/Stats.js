@@ -1,4 +1,5 @@
 import React from "react";
+import {currencyFormat} from "../utils";
 
 export const Stats = (props) => {
     return (
@@ -19,10 +20,18 @@ export const Stats = (props) => {
                                     <tbody className="divide-y divide-gray-600">
                                         <tr>
                                             <td className="text-sm pl-4 py-4">
-                                                <div className="font-medium text-gray-200">Change</div>
+                                                <div className="font-medium text-gray-200">Price Change (24h)</div>
                                             </td>
                                             <td className="text-right pr-4">
-                                                <div className="font-medium text-gray-200">{props.change}</div>
+                                                <div className={`${props.coin.market_data.price_change_percentage_24h < 0 ? 'text-red-400' : 'text-green-400'}`}>{Number(props.coin.market_data.price_change_percentage_24h).toFixed(2)}%</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="text-sm pl-4 py-4">
+                                                <div className="font-medium text-gray-200">Price Change (7d)</div>
+                                            </td>
+                                            <td className="text-right pr-4">
+                                                <div className={`${props.coin.market_data.price_change_percentage_7d < 0 ? 'text-red-400' : 'text-green-400'}`}>{Number(props.coin.market_data.price_change_percentage_7d).toFixed(2)}%</div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -30,7 +39,15 @@ export const Stats = (props) => {
                                                 <div className="font-medium text-gray-200">Market Cap</div>
                                             </td>
                                             <td className="text-right pr-4">
-                                                <div className="font-medium text-gray-200">{props.marketCap}</div>
+                                                <div className="font-medium text-gray-200">{currencyFormat(props.coin.market_data.market_cap.usd)}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="text-sm pl-4 py-4">
+                                                <div className="font-medium text-gray-200">ATH</div>
+                                            </td>
+                                            <td className="text-right pr-4">
+                                                <div className="font-medium text-gray-200">{currencyFormat(props.coin.market_data.ath.usd)}</div>
                                             </td>
                                         </tr>
                                     </tbody>

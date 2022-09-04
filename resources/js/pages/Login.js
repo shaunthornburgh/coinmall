@@ -5,6 +5,7 @@ import AuthContext from "../context/authContext";
 import {Link} from "react-router-dom"
 
 export const Login = (props) => {
+    const appUrl = process.env.MIX_APP_URL;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [remember, setRemember] = useState(false);
@@ -23,7 +24,7 @@ export const Login = (props) => {
         e.preventDefault();
         setErrors(null);
         setMessage('');
-        axios.get('/sanctum/csrf-cookie').then(() => {
+        axios.get(appUrl + '/sanctum/csrf-cookie').then(() => {
             const payload = {
                 email,
                 password
@@ -31,7 +32,7 @@ export const Login = (props) => {
             if (remember) {
                 payload.remember = true;
             }
-            axios.post('/api/login', payload, {
+            axios.post(appUrl + '/api/login', payload, {
                 headers: {
                     'Accept': 'application/json'
                 }

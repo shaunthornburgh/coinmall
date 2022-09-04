@@ -6,9 +6,8 @@ import {TrendingList} from "../components/TrendingList";
 import {useAxios} from "../hooks/useAxios";
 
 export const Coin = () => {
-    let { id } = useParams();
-    const { response, loading , error } = useAxios(`/coins/${id}`, [id]);
-    
+    let { id, timeFrame } = useParams();
+    const { response, loading , error } = useAxios(`/coins/${id}`, [id, timeFrame]);
     return (
         <main className="-mt-24 pb-8 mb-auto">
             {loading && <div>A moment please...</div>}
@@ -27,12 +26,15 @@ export const Coin = () => {
                 </div>
                 {error && <div>{`There is a problem fetching the data - ${error}`}</div>}
                 <div className="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
-                    {response && <Newsfeed key={response.id} coin={response} />}
-                        <div className="grid grid-cols-1 gap-4">
-                            {response && <Stats key={response.id} coin={response}/>}
-                            <TrendingList />
-                        </div>
-                    }
+                    {response && <Newsfeed
+                        key={response.id}
+                        coin={response}
+                        page='coin'
+                    />}
+                    <div className="grid grid-cols-1 gap-4">
+                        {response && <Stats key={response.id} coin={response}/>}
+                        <TrendingList />
+                    </div>
                 </div>
             </div>
         </main>

@@ -18,11 +18,15 @@ function RootApp() {
         <AuthContext.Provider value={{authData, setAuthData }}>
             <Layout>
                 <Routes>
+                    <Route path="/" element={<Markets /> } />
                     <Route path="/markets" element={<Markets /> } />
                     <Route path="/portfolio" element={<Portfolio /> } />
+                    <Route path="/portfolio/:id" element={<Portfolio /> } />
+                    <Route path="/portfolio/:id/:timeFrame" element={<Portfolio /> } />
                     <Route path="/login" element={<Login /> } />
                     <Route path="/register" element={<Register /> } />
                     <Route path="/coin/:id" element={<Coin /> } />
+                    <Route path="/coin/:id/:timeFrame" element={<Coin /> } />
                 </Routes>
             </Layout>
         </AuthContext.Provider>

@@ -3,9 +3,8 @@ import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import Chart from "../img/chart.svg";
 
 export const TrendingRow = (props) => {
-    console.log(props)
     return (
-        <tr key={props.name} className="hover:bg-gray-600">
+        <tr key={props.name} className="hover:bg-gray-600 cursor-pointer">
             <td className="whitespace-nowrap py-4 pl-4">
                 <img className="h-10 w-10 rounded-full" src={props.coin.small} alt="" />
             </td>

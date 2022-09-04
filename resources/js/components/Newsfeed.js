@@ -16,12 +16,18 @@ export const Newsfeed = (props) => {
                                     <h1 className="text-white font-bold text-xl">${parseFloat(props.coin.market_data.current_price.usd).toFixed(2)}</h1>
                                     <p className="text-gray-400 text-xs">{props.coin.market_data.price_change_percentage_24h }%</p>
                                 </div>
-                                <Timeline />
+                                <Timeline
+                                    page={props.page}
+                                    coin={props.coin.id}
+                                />
                             </div>
                         </div>
-                        <LineGraph />
+                        <LineGraph
+                            coin={props.coin.id}
+                        />
                     </div>
                 </div>
+                <p className='mt-6 text-sm text-gray-500 [&>a]:text-indigo-600 [&>a]:underline' dangerouslySetInnerHTML={{ __html: props.coin.description.en }}></p>
             </section>
         </div>
     )

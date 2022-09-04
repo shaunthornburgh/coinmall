@@ -1,7 +1,9 @@
 import React from "react";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import {currencyFormat} from "../utils";
 
 export const MarketsRow = (props) => {
+    const sign = (Math.sign(props.coin.price_change_percentage_24h) === 1 ? '+' : ' ')
 
     return (
         <tr key={props.coin.id} className="hover:bg-gray-600">
@@ -19,14 +21,14 @@ export const MarketsRow = (props) => {
                 </div>
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-200">
-                <div className="text-gray-200">${parseFloat(props.coin.current_price).toFixed(2)}</div>
+                <div className="text-gray-200">{currencyFormat(props.coin.current_price)}</div>
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-200">
-                <div className="text-gray-200">{parseFloat(props.coin.price_change_percentage_24h).toFixed(2)}%</div>
+                <div className={`${props.coin.price_change_percentage_24h < 0 ? 'text-red-400' : 'text-green-400'}`}>{sign}{parseFloat(props.coin.price_change_percentage_24h).toFixed(2)}%</div>
             </td>
 
             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-200">
-                <div className="text-gray-200">${Math.abs(Number(props.coin.market_cap) / 1.0e+6).toFixed(2)}M</div>
+                <div className="text-gray-200">{currencyFormat(props.coin.market_cap)}</div>
             </td>
             <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                 <Link className="text-white hover:text-white" to={"/coin/" + props.coin.id + "/"}>Details</Link>

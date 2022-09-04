@@ -3034,33 +3034,27 @@ var Layout = function Layout(_ref) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "LineGraph": () => (/* binding */ LineGraph),
-/* harmony export */   "options": () => (/* binding */ options)
+/* harmony export */   "LineGraph": () => (/* binding */ LineGraph)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var chartjs_adapter_moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! chartjs-adapter-moment */ "./node_modules/chartjs-adapter-moment/dist/chartjs-adapter-moment.esm.js");
-/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.mjs");
-/* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+/* harmony import */ var _hooks_useAxios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/useAxios */ "./resources/js/hooks/useAxios.js");
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.mjs");
+/* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
 
 
 
-chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart.register(chart_js__WEBPACK_IMPORTED_MODULE_2__.CategoryScale, chart_js__WEBPACK_IMPORTED_MODULE_2__.LinearScale, chart_js__WEBPACK_IMPORTED_MODULE_2__.PointElement, chart_js__WEBPACK_IMPORTED_MODULE_2__.LineElement, chart_js__WEBPACK_IMPORTED_MODULE_2__.TimeScale, chart_js__WEBPACK_IMPORTED_MODULE_2__.Tooltip);
+
+
+chart_js__WEBPACK_IMPORTED_MODULE_3__.Chart.register(chart_js__WEBPACK_IMPORTED_MODULE_3__.CategoryScale, chart_js__WEBPACK_IMPORTED_MODULE_3__.LinearScale, chart_js__WEBPACK_IMPORTED_MODULE_3__.PointElement, chart_js__WEBPACK_IMPORTED_MODULE_3__.LineElement, chart_js__WEBPACK_IMPORTED_MODULE_3__.TimeScale, chart_js__WEBPACK_IMPORTED_MODULE_3__.Tooltip);
 var options = {
   responsive: true,
   plugins: {
@@ -3089,44 +3083,53 @@ var options = {
     }
   }
 };
-var LineGraph = function LineGraph() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-      _useState2 = _slicedToArray(_useState, 2),
-      graphData = _useState2[0],
-      setGraphData = _useState2[1];
+var LineGraph = function LineGraph(props) {
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useParams)(),
+      timeFrame = _useParams.timeFrame;
 
-  var createMockData = function createMockData() {
-    var data = [];
-    var value = 50;
+  var days = timeFrame;
 
-    for (var i = 0; i < 366; i++) {
-      var date = new Date();
-      date.setHours(0, 0, 0, 0);
-      date.setDate(i);
-      value += Math.round((Math.random() < 0.5 ? 1 : 0) * Math.random() * 10);
-      data.push({
-        x: date,
-        y: value
-      });
-    }
+  if (!days) {
+    days = 365;
+  }
 
-    setGraphData(data);
+  var _useAxios = (0,_hooks_useAxios__WEBPACK_IMPORTED_MODULE_2__.useAxios)("coins/".concat(props.coin, "/market_chart?vs_currency=usd&days=").concat(days), [props.coin, days]),
+      response = _useAxios.response;
+
+  if (!response) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      className: "wrapper-container mt-8",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        children: "Loading"
+      })
+    });
+  }
+
+  var options = {
+    responsive: true
   };
-
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    createMockData();
-  }, []);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_chartjs_2__WEBPACK_IMPORTED_MODULE_4__.Line, {
-    data: {
-      datasets: [{
-        type: 'line',
-        borderColor: "#02cd97",
-        borderWidth: 2,
-        pointBorderColor: 'rgba(0, 0, 0, 0)',
-        pointBackgroundColor: 'rgba(0, 0, 0, 0)',
-        data: graphData
-      }]
-    },
+  var coinChartData = response.prices.map(function (value) {
+    return {
+      x: value[0],
+      y: value[1].toFixed(2)
+    };
+  });
+  var data = {
+    labels: coinChartData.map(function (value) {
+      return moment__WEBPACK_IMPORTED_MODULE_4___default()(value.x).format('MMM DD');
+    }),
+    datasets: [{
+      fill: true,
+      label: props.coin,
+      data: coinChartData.map(function (val) {
+        return val.y;
+      }),
+      borderColor: "#02cd97",
+      backgroundColor: 'rgba(53, 162, 235, 0.5)'
+    }]
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_chartjs_2__WEBPACK_IMPORTED_MODULE_7__.Line, {
+    data: data,
     options: options
   });
 };
@@ -3232,61 +3235,64 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils */ "./resources/js/utils.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 
 
 var MarketsRow = function MarketsRow(props) {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("tr", {
+  var sign = Math.sign(props.coin.price_change_percentage_24h) === 1 ? '+' : ' ';
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
     className: "hover:bg-gray-600",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
       className: "whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
         className: "flex items-center",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "h-10 w-10 flex-shrink-0",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
             className: "h-10 w-10 rounded-full",
             src: props.coin.image,
             alt: ""
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "ml-4",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "font-medium text-gray-200",
             children: props.coin.name
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "ml-4",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "font-medium text-gray-500",
             children: props.coin.symbol
           })
         })]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
       className: "whitespace-nowrap px-3 py-4 text-sm text-gray-200",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "text-gray-200",
-        children: ["$", parseFloat(props.coin.current_price).toFixed(2)]
+        children: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.currencyFormat)(props.coin.current_price)
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
       className: "whitespace-nowrap px-3 py-4 text-sm text-gray-200",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-        className: "text-gray-200",
-        children: [parseFloat(props.coin.price_change_percentage_24h).toFixed(2), "%"]
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "".concat(props.coin.price_change_percentage_24h < 0 ? 'text-red-400' : 'text-green-400'),
+        children: [sign, parseFloat(props.coin.price_change_percentage_24h).toFixed(2), "%"]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
       className: "whitespace-nowrap px-3 py-4 text-sm text-gray-200",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "text-gray-200",
-        children: ["$", Math.abs(Number(props.coin.market_cap) / 1.0e+6).toFixed(2), "M"]
+        children: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.currencyFormat)(props.coin.market_cap)
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
       className: "relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
         className: "text-white hover:text-white",
         to: "/coin/" + props.coin.id + "/",
         children: "Details"
@@ -3321,9 +3327,9 @@ __webpack_require__.r(__webpack_exports__);
 var Newsfeed = function Newsfeed(props) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
     className: "grid grid-cols-1 gap-4 lg:col-span-2",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("section", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("section", {
       "aria-labelledby": "section-1-title",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: "rounded-lg bg-gray-700 overflow-hidden shadow",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
@@ -3341,11 +3347,21 @@ var Newsfeed = function Newsfeed(props) {
                   className: "text-gray-400 text-xs",
                   children: [props.coin.market_data.price_change_percentage_24h, "%"]
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Timeline__WEBPACK_IMPORTED_MODULE_2__.Timeline, {})]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Timeline__WEBPACK_IMPORTED_MODULE_2__.Timeline, {
+                page: props.page,
+                coin: props.coin.id
+              })]
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_LineGraph__WEBPACK_IMPORTED_MODULE_1__.LineGraph, {})]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_LineGraph__WEBPACK_IMPORTED_MODULE_1__.LineGraph, {
+            coin: props.coin.id
+          })]
         })
-      })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+        className: "mt-6 text-sm text-gray-500 [&>a]:text-indigo-600 [&>a]:underline",
+        dangerouslySetInnerHTML: {
+          __html: props.coin.description.en
+        }
+      })]
     })
   });
 };
@@ -3490,52 +3506,55 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _img_chart_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../img/chart.svg */ "./resources/js/img/chart.svg");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../icons/icons */ "./resources/js/icons/icons.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils */ "./resources/js/utils.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
 
 
 
 
 var PortfolioRow = function PortfolioRow(props) {
-  var price_change_percentage_24h = props.coin.market_data.price_change_percentage_24h;
-  var color = Math.sign(price_change_percentage_24h) === 1 ? '02cd97' : 'f4918f';
-  var sign = Math.sign(price_change_percentage_24h) === 1 ? '+' : ' ';
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
-    className: "hover:bg-gray-600",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
+
+  function handleRowClick() {
+    navigate('/portfolio/' + props.coin.id);
+  }
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
+    className: "hover:bg-gray-600 cursor-pointer",
+    onClick: handleRowClick,
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
       className: "whitespace-nowrap py-4 pl-6",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
         className: "h-10 w-10 rounded-full",
         src: props.coin.image.small,
         alt: ""
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("td", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("td", {
       className: "text-sm pl-2",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: "font-medium text-gray-200",
         children: props.coin.name
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: "text-gray-400",
         children: props.symbol
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-        src: _img_chart_svg__WEBPACK_IMPORTED_MODULE_1__["default"],
-        style: {
-          width: '80px'
-        }
-      })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("td", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+      children: props.coin.market_data.price_change_24h < 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_icons_icons__WEBPACK_IMPORTED_MODULE_1__.TrendingDown, {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_icons_icons__WEBPACK_IMPORTED_MODULE_1__.TrendingUp, {})
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("td", {
       className: "text-sm sm:pr-4 text-right",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: "font-medium text-gray-200",
-        children: ["$", parseFloat(props.coin.market_data.current_price.usd).toFixed(2)]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "text-[#" + color + "]",
-        children: [sign, parseFloat(price_change_percentage_24h).toFixed(2), "%%"]
+        children: (0,_utils__WEBPACK_IMPORTED_MODULE_2__.currencyFormat)(props.coin.market_data.current_price.usd)
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        className: "".concat(props.coin.market_data.price_change_24h < 0 ? 'text-red-400' : 'text-green-400'),
+        children: (0,_utils__WEBPACK_IMPORTED_MODULE_2__.currencyFormat)(props.coin.market_data.price_change_24h)
       })]
     })]
-  });
+  }, props.id);
 };
 
 /***/ }),
@@ -3611,10 +3630,19 @@ function RootApp() {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_Layout__WEBPACK_IMPORTED_MODULE_2__.Layout, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Routes, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          path: "/",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Markets__WEBPACK_IMPORTED_MODULE_3__.Markets, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
           path: "/markets",
           element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Markets__WEBPACK_IMPORTED_MODULE_3__.Markets, {})
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
           path: "/portfolio",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Portfolio__WEBPACK_IMPORTED_MODULE_8__.Portfolio, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          path: "/portfolio/:id",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Portfolio__WEBPACK_IMPORTED_MODULE_8__.Portfolio, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          path: "/portfolio/:id/:timeFrame",
           element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Portfolio__WEBPACK_IMPORTED_MODULE_8__.Portfolio, {})
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
           path: "/login",
@@ -3624,6 +3652,9 @@ function RootApp() {
           element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Register__WEBPACK_IMPORTED_MODULE_5__.Register, {})
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
           path: "/coin/:id",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Coin__WEBPACK_IMPORTED_MODULE_9__.Coin, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          path: "/coin/:id/:timeFrame",
           element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Coin__WEBPACK_IMPORTED_MODULE_9__.Coin, {})
         })]
       })
@@ -3654,63 +3685,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils */ "./resources/js/utils.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 
 var Stats = function Stats(props) {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("section", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
     "aria-labelledby": "section-2-title",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "rounded-lg bg-gray-700 overflow-hidden shadow",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "flex flex-col",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "inline-block min-w-full py-2 align-middle md:px-6 lg:px-8",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
               className: "overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("table", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("table", {
                 className: "min-w-full divide-y divide-gray-600",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("thead", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("thead", {
                   className: "bg-gray-50",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("tr", {
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("tr", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
                       scope: "col",
                       colSpan: "4",
                       className: "col-span-2 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white bg-gray-700 sm:pl-6",
                       children: "Stats"
                     })
                   })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("tbody", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tbody", {
                   className: "divide-y divide-gray-600",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("tr", {
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
                       className: "text-sm pl-4 py-4",
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                         className: "font-medium text-gray-200",
-                        children: "Change"
+                        children: "Price Change (24h)"
                       })
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
                       className: "text-right pr-4",
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-                        className: "font-medium text-gray-200",
-                        children: props.change
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                        className: "".concat(props.coin.market_data.price_change_percentage_24h < 0 ? 'text-red-400' : 'text-green-400'),
+                        children: [Number(props.coin.market_data.price_change_percentage_24h).toFixed(2), "%"]
                       })
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("tr", {
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
                       className: "text-sm pl-4 py-4",
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                        className: "font-medium text-gray-200",
+                        children: "Price Change (7d)"
+                      })
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
+                      className: "text-right pr-4",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                        className: "".concat(props.coin.market_data.price_change_percentage_7d < 0 ? 'text-red-400' : 'text-green-400'),
+                        children: [Number(props.coin.market_data.price_change_percentage_7d).toFixed(2), "%"]
+                      })
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
+                      className: "text-sm pl-4 py-4",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                         className: "font-medium text-gray-200",
                         children: "Market Cap"
                       })
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
                       className: "text-right pr-4",
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                         className: "font-medium text-gray-200",
-                        children: props.marketCap
+                        children: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.currencyFormat)(props.coin.market_data.market_cap.usd)
+                      })
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
+                      className: "text-sm pl-4 py-4",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                        className: "font-medium text-gray-200",
+                        children: "ATH"
+                      })
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
+                      className: "text-right pr-4",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                        className: "font-medium text-gray-200",
+                        children: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.currencyFormat)(props.coin.market_data.ath.usd)
                       })
                     })]
                   })]
@@ -3739,37 +3800,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 
 var Timeline = function Timeline(props) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     className: "flex flex-row justify-evenly text-white font-bold h-9",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("a", {
-      href: "#",
-      className: "text-indigo-100 text-sm rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10",
-      children: " 1H "
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("a", {
-      href: "#",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+      to: "/".concat(props.page, "/").concat(props.coin, "/1"),
       className: "text-indigo-100 text-sm rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10",
       children: " 24H "
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("a", {
-      href: "#",
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+      to: "/".concat(props.page, "/").concat(props.coin, "/7"),
       className: "text-indigo-100 text-sm rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10",
       children: " 1W "
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("a", {
-      href: "#",
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+      to: "/".concat(props.page, "/").concat(props.coin, "/30"),
       className: "text-indigo-100 text-sm rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10",
       children: " 1M "
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("a", {
-      href: "#",
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+      to: "/".concat(props.page, "/").concat(props.coin, "/90"),
+      className: "text-indigo-100 text-sm rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10",
+      children: " 3M "
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+      to: "/".concat(props.page, "/").concat(props.coin, "/365"),
       className: "text-indigo-100 text-sm rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10",
       children: " 1Y "
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("a", {
-      href: "#",
-      className: "text-indigo-100 text-sm rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10",
-      children: " All "
     })]
   });
 };
@@ -3876,9 +3935,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var TrendingRow = function TrendingRow(props) {
-  console.log(props);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
-    className: "hover:bg-gray-600",
+    className: "hover:bg-gray-600 cursor-pointer",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
       className: "whitespace-nowrap py-4 pl-4",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
@@ -4249,6 +4307,49 @@ var useForm = function useForm() {
 
 /***/ }),
 
+/***/ "./resources/js/icons/icons.js":
+/*!*************************************!*\
+  !*** ./resources/js/icons/icons.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TrendingDown": () => (/* binding */ TrendingDown),
+/* harmony export */   "TrendingUp": () => (/* binding */ TrendingUp)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+var TrendingDown = function TrendingDown() {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    className: "h-5 w-5 text-red-400",
+    viewBox: "0 0 20 20",
+    fill: "currentColor",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", {
+      fillRule: "evenodd",
+      d: "M12 13a1 1 0 100 2h5a1 1 0 001-1V9a1 1 0 10-2 0v2.586l-4.293-4.293a1 1 0 00-1.414 0L8 9.586 3.707 5.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0L11 9.414 14.586 13H12z",
+      clipRule: "evenodd"
+    })
+  });
+};
+var TrendingUp = function TrendingUp() {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    className: "h-5 w-5 text-green-400",
+    viewBox: "0 0 20 20",
+    fill: "currentColor",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", {
+      fillRule: "evenodd",
+      d: "M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z",
+      clipRule: "evenodd"
+    })
+  });
+};
+
+/***/ }),
+
 /***/ "./resources/js/pages/Coin.js":
 /*!************************************!*\
   !*** ./resources/js/pages/Coin.js ***!
@@ -4278,9 +4379,10 @@ __webpack_require__.r(__webpack_exports__);
 
 var Coin = function Coin() {
   var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useParams)(),
-      id = _useParams.id;
+      id = _useParams.id,
+      timeFrame = _useParams.timeFrame;
 
-  var _useAxios = (0,_hooks_useAxios__WEBPACK_IMPORTED_MODULE_4__.useAxios)("/coins/".concat(id), [id]),
+  var _useAxios = (0,_hooks_useAxios__WEBPACK_IMPORTED_MODULE_4__.useAxios)("/coins/".concat(id), [id, timeFrame]),
       response = _useAxios.response,
       loading = _useAxios.loading,
       error = _useAxios.error;
@@ -4315,13 +4417,14 @@ var Coin = function Coin() {
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         className: "grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8",
         children: [response && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_Newsfeed__WEBPACK_IMPORTED_MODULE_1__.Newsfeed, {
-          coin: response
+          coin: response,
+          page: "coin"
         }, response.id), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "grid grid-cols-1 gap-4",
           children: [response && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_Stats__WEBPACK_IMPORTED_MODULE_0__.Stats, {
             coin: response
           }, response.id), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_TrendingList__WEBPACK_IMPORTED_MODULE_3__.TrendingList, {})]
-        }), "}"]
+        })]
       })]
     })]
   });
@@ -4367,6 +4470,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Login = function Login(props) {
+  var appUrl = "http://coinmall.test";
+
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
       email = _useState2[0],
@@ -4405,7 +4510,7 @@ var Login = function Login(props) {
     e.preventDefault();
     setErrors(null);
     setMessage('');
-    axios.get('/sanctum/csrf-cookie').then(function () {
+    axios.get(appUrl + '/sanctum/csrf-cookie').then(function () {
       var payload = {
         email: email,
         password: password
@@ -4415,7 +4520,7 @@ var Login = function Login(props) {
         payload.remember = true;
       }
 
-      axios.post('/api/login', payload, {
+      axios.post(appUrl + '/api/login', payload, {
         headers: {
           'Accept': 'application/json'
         }
@@ -4629,6 +4734,12 @@ var Portfolio = function Portfolio() {
 
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
   var coin = null;
+
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useParams)(),
+      id = _useParams.id,
+      timeFrame = _useParams.timeFrame;
+
+  var days = null;
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
     if (!authData.signedIn) {
       navigate('/login');
@@ -4636,7 +4747,13 @@ var Portfolio = function Portfolio() {
   }, []);
 
   if (authData.signedIn) {
-    var _useAxios = (0,_hooks_useAxios__WEBPACK_IMPORTED_MODULE_4__.useAxios)("/coins/".concat(authData.user.data.coins[0].name)),
+    if (id) {
+      days = id;
+    } else {
+      days = authData.user.data.coins[0].name;
+    }
+
+    var _useAxios = (0,_hooks_useAxios__WEBPACK_IMPORTED_MODULE_4__.useAxios)("/coins/".concat(days), [id]),
         response = _useAxios.response,
         loading = _useAxios.loading,
         error = _useAxios.error;
@@ -4664,8 +4781,9 @@ var Portfolio = function Portfolio() {
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8",
           children: [authData.signedIn && authData.user && coin && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_Newsfeed__WEBPACK_IMPORTED_MODULE_0__.Newsfeed, {
-            coin: coin
-          }, authData.user.data.coins[0].id), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_PortfolioList__WEBPACK_IMPORTED_MODULE_1__.PortfolioList, {})]
+            coin: coin,
+            page: "portfolio"
+          }, coin.id), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_PortfolioList__WEBPACK_IMPORTED_MODULE_1__.PortfolioList, {})]
         })]
       })
     });
@@ -4879,6 +4997,23 @@ var Register = function Register() {
     })
   });
 };
+
+/***/ }),
+
+/***/ "./resources/js/utils.js":
+/*!*******************************!*\
+  !*** ./resources/js/utils.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "currencyFormat": () => (/* binding */ currencyFormat)
+/* harmony export */ });
+function currencyFormat(num) {
+  return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
 
 /***/ }),
 

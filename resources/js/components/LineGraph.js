@@ -1,5 +1,7 @@
-import React, {useEffect, useState}  from "react";
+import React from "react";
+import { useParams } from "react-router-dom";
 import 'chartjs-adapter-moment';
+import {useAxios} from "../hooks/useAxios";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -11,6 +13,7 @@ import {
 
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import moment from "moment";
 
 ChartJS.register(
     CategoryScale,
@@ -22,7 +25,7 @@ ChartJS.register(
 
 );
 
-export const options = {
+const options = {
     responsive: true,
     plugins: {
         tooltip: {
@@ -51,36 +54,41 @@ export const options = {
     }
 };
 
-export const LineGraph = () => {
-    const [graphData, setGraphData] = useState([]);
-    const createMockData = () => {
-        let data = [];
-        let value = 50;
-        for (let i = 0; i < 366; i++) {
-            let date = new Date();
-            date.setHours(0,0,0,0);
-            date.setDate(i);
-            value += Math.round((Math.random() < 0.5 ? 1 : 0) * Math.random() * 10);
-            data.push({x: date, y: value});
-        }
-        setGraphData(data);
+export const LineGraph = (props) => {
+    const { timeFrame } = useParams();
+    let days = timeFrame;
+    if (!days) {
+        days = 365;
     }
-    useEffect(()=>{
-        createMockData()
-    }, []);
+    const { response } = useAxios(`coins/${props.coin}/market_chart?vs_currency=usd&days=${days}`, [props.coin, days]);
+
+    if (!response) {
+        return (
+            <div className="wrapper-container mt-8">
+                <div>Loading</div>
+            </div>
+        )
+    }
+    const options = {
+        responsive: true,
+    };
+    const coinChartData = response.prices.map(value => ({ x: value[0], y: value[1].toFixed(2) }));
+    const data = {
+        labels: coinChartData.map(value => moment(value.x).format('MMM DD')),
+        datasets: [
+            {
+                fill: true,
+                label: props.coin,
+                data: coinChartData.map(val => val.y),
+                borderColor: "#02cd97",
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            }
+        ]
+    }
 
     return (
         <Line
-            data={{
-                datasets: [{
-                    type: 'line',
-                    borderColor: "#02cd97",
-                    borderWidth: 2,
-                    pointBorderColor: 'rgba(0, 0, 0, 0)',
-                    pointBackgroundColor: 'rgba(0, 0, 0, 0)',
-                    data: graphData,
-                },],
-            }}
+            data={data}
             options={options}
         />
     )
