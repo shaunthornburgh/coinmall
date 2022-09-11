@@ -3,34 +3,40 @@ import {PortfolioList} from "../components/PortfolioList";
 import React, {useEffect, useState, useContext} from "react";
 import AuthContext from "../context/authContext";
 import {useNavigate, useParams} from "react-router-dom";
-import {useAxios} from "../hooks/useAxios";
+import axios from "axios";
 
 export const Portfolio = () => {
+    const appUrl = process.env.MIX_APP_URL;
     const {authData} = useContext(AuthContext);
     const navigate = useNavigate();
-    let coin = null;
-    let { id, timeFrame } = useParams();
-    let days = null;
+    let { id } = useParams();
+    let [displayCoin, setDisplayCoin] = useState(null);
+    let [portfolio, setPortfolio] = useState([]);
 
     useEffect(() => {
         if (!authData.signedIn) {
             navigate('/login');
         }
-    }, []);
 
-    if (authData.signedIn) {
-        if (id) {
-            days = id
-        } else {
-            days = authData.user.data.coins[0].name
-        }
-        const { response, loading , error } = useAxios(`/coins/${days}`, [id]);
-        coin = response
-    }
+        axios.get(`${appUrl}/api/coins`, )
+            .then(response => {
+                setPortfolio(response.data.data);
+                return response.data.data;
+            })
+            .then(portfolio => {
+                let param = id ? id : portfolio[0];
+                return axios.get(`https://api.coingecko.com/api/v3/coins/${param}`, { withCredentials: false })
+            })
+            .then(response => {
+                setDisplayCoin(response.data);
+            })
+    }, [id]);
 
-    if (authData.signedIn) {
-        return (
-            <main className="-mt-24 pb-8 mb-auto">
+    return (
+        <main className="-mt-24 pb-8 mb-auto">
+            {portfolio.length === 0 && <div>A moment please...</div>}
+            {portfolio.length === 0 && <div>You have no coins in your portfolio...</div>}
+            {displayCoin && (
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                     <div className="sm:flex sm:items-center">
                         <div className="mb-7 sm:flex-auto">
@@ -39,17 +45,20 @@ export const Portfolio = () => {
                         </div>
                     </div>
                     <div className="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
-                        {authData.signedIn && authData.user && coin && (
-                            <Newsfeed
-                                key={coin.id}
-                                coin={coin}
-                                page='portfolio'
+                        <Newsfeed
+                            key={displayCoin.id}
+                            coin={displayCoin}
+                            page='portfolio'
+                        />
+                        {portfolio.length !== 0 && (
+                            <PortfolioList
+                                portfolio={portfolio}
                             />
                         )}
-                        <PortfolioList/>
                     </div>
                 </div>
-            </main>
-        );
-    }
+            )}
+        </main>
+    );
+
 }

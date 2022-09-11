@@ -1,10 +1,8 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {PortfolioRow} from "./PortfolioRow";
-import AuthContext from "../context/authContext";
 
-export const PortfolioList = () => {
-    const {authData} = useContext(AuthContext);
+export const PortfolioList = (props) => {
     const [coinData, setCoinData] = useState([]);
 
     const getCoinData = (coin) => {
@@ -18,13 +16,11 @@ export const PortfolioList = () => {
             })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         const coinList = [];
-        if (authData.user) {
-            authData.user.data.coins.map(value => {
-                coinList.push(value.name)
-            });
-        }
+        props.portfolio.map(value => {
+            coinList.push(value)
+        });
         let tmpCoinData = [];
         let promises = [];
 

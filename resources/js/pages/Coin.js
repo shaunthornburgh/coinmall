@@ -1,13 +1,38 @@
 import {Stats} from "../components/Stats";
 import {Newsfeed} from "../components/Newsfeed";
-import React from "react";
-import {useParams} from "react-router-dom";
+import React, {useContext} from "react";
 import {TrendingList} from "../components/TrendingList";
 import {useAxios} from "../hooks/useAxios";
+import AuthContext from "../context/authContext";
+import {useNavigate, useParams} from "react-router-dom";
 
 export const Coin = () => {
+    const {authData, setAuthData} = useContext(AuthContext);
     let { id, timeFrame } = useParams();
     const { response, loading , error } = useAxios(`/coins/${id}`, [id, timeFrame]);
+    const appUrl = process.env.MIX_APP_URL;
+    const navigate = useNavigate();
+
+    const handleButtonClick = () => {
+        axios
+            .post(appUrl + '/api/coins',
+                {
+                    user_id: authData.user.data.id,
+                    coin: id
+                },
+                {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(() => {
+                navigate('/portfolio')
+            })
+            .catch(error =>
+                console.log(error.toJSON())
+            )
+    }
+
     return (
         <main className="-mt-24 pb-8 mb-auto">
             {loading && <div>A moment please...</div>}
@@ -18,8 +43,10 @@ export const Coin = () => {
                         <p className="mt-2 text-sm text-gray-200">Details about this coin.</p>
                     </div>
                     <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                        <button type="button"
-                                className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                        <button
+                            type="button"
+                            className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                            onClick={handleButtonClick}
                         >Add to portfolio
                         </button>
                     </div>

@@ -36,12 +36,12 @@ class LoginController extends BaseController
     public function me()
     {
         if (Auth::user()) {
-            $auth = Auth::user()->with('coins')->first();
+            $auth = Auth::user()->first();
         }
 
         $success['id'] =  $auth->id;
         $success['name'] =  $auth->name;
-        $success['coins'] = $auth->coins;
+        // $success['coins'] = $auth->coins;
 
         return $this->handleResponse($success, 'Current user');
     }

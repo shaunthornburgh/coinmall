@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('coin_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            $table->unique(['coin_id', 'user_id']);
         });
     }
 
