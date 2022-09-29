@@ -2621,16 +2621,13 @@ var Header = function Header() {
       });
     }
 
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
         className: "text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2 hover:bg-opacity-10",
         href: "#",
         onClick: handleLogout,
         children: "Logout"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
-        className: "text-indigo-100 text-sm font-medium rounded-md bg-white bg-opacity-0 px-3 py-2",
-        children: ["Welcome back ", authData.user.data.name, "!"]
-      })]
+      })
     });
   };
 
@@ -3325,6 +3322,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Newsfeed = function Newsfeed(props) {
+  console.log(props.coin.symbol);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
     className: "grid grid-cols-1 gap-4 lg:col-span-2",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("section", {
@@ -3564,17 +3562,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var _Layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Layout */ "./resources/js/components/Layout.js");
 /* harmony import */ var _pages_Markets__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../pages/Markets */ "./resources/js/pages/Markets.js");
 /* harmony import */ var _pages_Login__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../pages/Login */ "./resources/js/pages/Login.js");
 /* harmony import */ var _pages_Register__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../pages/Register */ "./resources/js/pages/Register.js");
-/* harmony import */ var _hooks_useAuth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../hooks/useAuth */ "./resources/js/hooks/useAuth.js");
-/* harmony import */ var _context_authContext__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../context/authContext */ "./resources/js/context/authContext.js");
-/* harmony import */ var _pages_Portfolio__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../pages/Portfolio */ "./resources/js/pages/Portfolio.js");
-/* harmony import */ var _pages_Coin__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../pages/Coin */ "./resources/js/pages/Coin.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _context_authContext__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../context/authContext */ "./resources/js/context/authContext.js");
+/* harmony import */ var _pages_Portfolio__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pages/Portfolio */ "./resources/js/pages/Portfolio.js");
+/* harmony import */ var _pages_Coin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../pages/Coin */ "./resources/js/pages/Coin.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -3600,53 +3597,50 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
 function RootApp() {
-  var _useAuth = (0,_hooks_useAuth__WEBPACK_IMPORTED_MODULE_6__.useAuth)(),
-      userData = _useAuth.userData;
-
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    signedIn: userData.signedIn,
-    user: userData.user
+    signedIn: false,
+    user: null,
+    portfolio: []
   }),
       _useState2 = _slicedToArray(_useState, 2),
       authData = _useState2[0],
       setAuthData = _useState2[1];
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_context_authContext__WEBPACK_IMPORTED_MODULE_7__["default"].Provider, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_context_authContext__WEBPACK_IMPORTED_MODULE_6__["default"].Provider, {
     value: {
       authData: authData,
       setAuthData: setAuthData
     },
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_Layout__WEBPACK_IMPORTED_MODULE_2__.Layout, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Routes, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Layout__WEBPACK_IMPORTED_MODULE_2__.Layout, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Routes, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
           path: "/",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Markets__WEBPACK_IMPORTED_MODULE_3__.Markets, {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_pages_Markets__WEBPACK_IMPORTED_MODULE_3__.Markets, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
           path: "/markets",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Markets__WEBPACK_IMPORTED_MODULE_3__.Markets, {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_pages_Markets__WEBPACK_IMPORTED_MODULE_3__.Markets, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
           path: "/portfolio",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Portfolio__WEBPACK_IMPORTED_MODULE_8__.Portfolio, {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_pages_Portfolio__WEBPACK_IMPORTED_MODULE_7__.Portfolio, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
           path: "/portfolio/:id",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Portfolio__WEBPACK_IMPORTED_MODULE_8__.Portfolio, {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_pages_Portfolio__WEBPACK_IMPORTED_MODULE_7__.Portfolio, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
           path: "/portfolio/:id/:timeFrame",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Portfolio__WEBPACK_IMPORTED_MODULE_8__.Portfolio, {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_pages_Portfolio__WEBPACK_IMPORTED_MODULE_7__.Portfolio, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
           path: "/login",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Login__WEBPACK_IMPORTED_MODULE_4__.Login, {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_pages_Login__WEBPACK_IMPORTED_MODULE_4__.Login, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
           path: "/register",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Register__WEBPACK_IMPORTED_MODULE_5__.Register, {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_pages_Register__WEBPACK_IMPORTED_MODULE_5__.Register, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
           path: "/coin/:id",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Coin__WEBPACK_IMPORTED_MODULE_9__.Coin, {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_pages_Coin__WEBPACK_IMPORTED_MODULE_8__.Coin, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
           path: "/coin/:id/:timeFrame",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_pages_Coin__WEBPACK_IMPORTED_MODULE_9__.Coin, {})
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_pages_Coin__WEBPACK_IMPORTED_MODULE_8__.Coin, {})
         })]
       })
     })
@@ -3656,8 +3650,8 @@ function RootApp() {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RootApp);
 
 if (document.getElementById('app')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.BrowserRouter, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(RootApp, {})
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.BrowserRouter, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(RootApp, {})
   }), document.getElementById('app'));
 }
 
@@ -3986,7 +3980,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var authData = {
   signedIn: false,
-  user: null
+  didFinishValidatingSignIn: false,
+  user: null,
+  portfolio: []
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createContext({
   authData: _objectSpread({}, authData),
@@ -4011,17 +4007,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_cookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-cookie */ "./node_modules/react-cookie/es6/Cookies.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var _context_authContext__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../context/authContext */ "./resources/js/context/authContext.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -4029,23 +4019,15 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var useAuth = function useAuth() {
   var appUrl = "http://coinmall.test";
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
-
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default().useState({
-    signedIn: false,
-    user: null,
-    coins: []
-  }),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      userData = _React$useState2[0],
-      setUserdata = _React$useState2[1];
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)(); // const [userData, setUserdata] = React.useState({signedIn: true, user: null, portfolio: []});
 
   var _useContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_authContext__WEBPACK_IMPORTED_MODULE_1__["default"]),
+      authData = _useContext.authData,
       setAuthData = _useContext.setAuthData;
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    setAuthData(userData);
-  }, [userData.signedIn]);
+    setAuthData(authData);
+  }, [authData.signedIn]);
 
   function getAuthCookieExpiration() {
     var date = new Date();
@@ -4062,15 +4044,26 @@ var useAuth = function useAuth() {
       sameSite: 'lax',
       httpOnly: false
     });
-    setUserdata({
-      signedIn: true,
-      user: user,
-      coins: ['bitcoin']
+    setAuthData(function (prev) {
+      return _objectSpread(_objectSpread({}, prev), {}, {
+        signedIn: true,
+        user: user,
+        didFinishValidatingSignIn: true
+      });
+    });
+    axios.get(appUrl + '/api/coins').then(function (response) {
+      setAuthData(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          portfolio: response.data.data
+        });
+      });
+    })["catch"](function (error) {
+      setLogout();
     });
     navigate('/markets');
   }
 
-  function setLogout() {
+  var setLogout = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
     var cookie = new react_cookie__WEBPACK_IMPORTED_MODULE_3__["default"]();
     cookie.remove('is_auth', {
       path: '/',
@@ -4078,42 +4071,64 @@ var useAuth = function useAuth() {
       sameSite: 'lax',
       httpOnly: false
     });
-    setUserdata({
+    setAuthData({
       signedIn: false,
-      user: null
+      user: null,
+      didFinishValidatingSignIn: false,
+      portfolio: []
     });
     navigate('/login');
-  }
-
-  function loginUserOnStartup() {
+  }, []);
+  var loginUserOnStartup = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
     var cookie = new react_cookie__WEBPACK_IMPORTED_MODULE_3__["default"]();
 
     if (cookie.get('is_auth')) {
-      axios.post(appUrl + '/api/me').then(function (response) {
-        setUserdata({
+      setAuthData(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
           signedIn: true,
-          user: response.data
+          didFinishValidatingSignIn: true
+        });
+      });
+      axios.post(appUrl + '/api/me').then(function (response) {
+        setAuthData(function (prev) {
+          return _objectSpread(_objectSpread({}, prev), {}, {
+            signedIn: true,
+            user: response.data.data,
+            didFinishValidatingSignIn: true
+          });
         });
       })["catch"](function (error) {
-        setUserdata({
-          signedIn: false,
-          user: null
+        setLogout();
+      });
+      axios.get(appUrl + '/api/coins').then(function (response) {
+        setAuthData(function (prev) {
+          return _objectSpread(_objectSpread({}, prev), {}, {
+            portfolio: response.data.data
+          });
         });
+      })["catch"](function (error) {
         setLogout();
       });
     } else {
-      setUserdata({
+      setAuthData({
         signedIn: false,
-        user: null
+        user: null,
+        didFinishValidatingSignIn: false,
+        portfolio: []
       });
     }
-  }
-
+  }, [authData]);
+  var setPortfolio = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (newPortfolio) {
+    setAuthData(_objectSpread(_objectSpread({}, authData), {}, {
+      portfolio: newPortfolio
+    }));
+  }, [authData]);
   return {
-    userData: userData,
+    authData: authData,
     setAsLogged: setAsLogged,
     setLogout: setLogout,
-    loginUserOnStartup: loginUserOnStartup
+    loginUserOnStartup: loginUserOnStartup,
+    setPortfolio: setPortfolio
   };
 };
 
@@ -4361,8 +4376,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_TrendingList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/TrendingList */ "./resources/js/components/TrendingList.js");
 /* harmony import */ var _hooks_useAxios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks/useAxios */ "./resources/js/hooks/useAxios.js");
 /* harmony import */ var _context_authContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../context/authContext */ "./resources/js/context/authContext.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var _hooks_useAuth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../hooks/useAuth */ "./resources/js/hooks/useAuth.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
 
 
 
@@ -4374,10 +4403,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var Coin = function Coin() {
   var _useContext = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_context_authContext__WEBPACK_IMPORTED_MODULE_5__["default"]),
-      authData = _useContext.authData,
-      setAuthData = _useContext.setAuthData;
+      authData = _useContext.authData;
 
-  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useParams)(),
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useParams)(),
       id = _useParams.id,
       timeFrame = _useParams.timeFrame;
 
@@ -4387,7 +4415,11 @@ var Coin = function Coin() {
       error = _useAxios.error;
 
   var appUrl = "http://coinmall.test";
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useNavigate)();
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useNavigate)();
+
+  var _useAuth = (0,_hooks_useAuth__WEBPACK_IMPORTED_MODULE_6__.useAuth)(),
+      userData = _useAuth.userData,
+      setPortfolio = _useAuth.setPortfolio;
 
   var handleButtonClick = function handleButtonClick() {
     axios.post(appUrl + '/api/coins', {
@@ -4398,50 +4430,51 @@ var Coin = function Coin() {
         'Accept': 'application/json'
       }
     }).then(function () {
+      setPortfolio([id].concat(_toConsumableArray(userData.portfolio)));
       navigate('/portfolio');
     })["catch"](function (error) {
       return console.log(error.toJSON());
     });
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("main", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("main", {
     className: "-mt-24 pb-8 mb-auto",
-    children: [loading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+    children: [loading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
       children: "A moment please..."
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
       className: "max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "sm:flex sm:items-center",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
           className: "mb-7 sm:flex-auto",
-          children: [response && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h1", {
+          children: [response && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h1", {
             className: "text-xl font-semibold text-indigo-100",
             children: response.name
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
             className: "mt-2 text-sm text-gray-200",
             children: "Details about this coin."
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
           className: "mt-4 sm:mt-0 sm:ml-16 sm:flex-none",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
             type: "button",
             className: "inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto",
             onClick: handleButtonClick,
             children: "Add to portfolio"
           })
         })]
-      }), error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+      }), error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
         children: "There is a problem fetching the data - ".concat(error)
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8",
-        children: [response && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_Newsfeed__WEBPACK_IMPORTED_MODULE_1__.Newsfeed, {
+        children: [response && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_Newsfeed__WEBPACK_IMPORTED_MODULE_1__.Newsfeed, {
           coin: response,
           page: "coin"
-        }, response.id), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        }, response.id), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
           className: "grid grid-cols-1 gap-4",
-          children: [response && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_Stats__WEBPACK_IMPORTED_MODULE_0__.Stats, {
+          children: [response && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_Stats__WEBPACK_IMPORTED_MODULE_0__.Stats, {
             coin: response
-          }, response.id), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_TrendingList__WEBPACK_IMPORTED_MODULE_3__.TrendingList, {})]
+          }, response.id), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_TrendingList__WEBPACK_IMPORTED_MODULE_3__.TrendingList, {})]
         })]
       })]
     })]
@@ -4737,10 +4770,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_PortfolioList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/PortfolioList */ "./resources/js/components/PortfolioList.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _context_authContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../context/authContext */ "./resources/js/context/authContext.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _hooks_useAuth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks/useAuth */ "./resources/js/hooks/useAuth.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -4763,10 +4796,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Portfolio = function Portfolio() {
-  var appUrl = "http://coinmall.test";
-
-  var _useContext = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_context_authContext__WEBPACK_IMPORTED_MODULE_3__["default"]),
-      authData = _useContext.authData;
+  var _useAuth = (0,_hooks_useAuth__WEBPACK_IMPORTED_MODULE_4__.useAuth)(),
+      authData = _useAuth.authData;
 
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
 
@@ -4778,33 +4809,36 @@ var Portfolio = function Portfolio() {
       displayCoin = _useState2[0],
       setDisplayCoin = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true),
       _useState4 = _slicedToArray(_useState3, 2),
-      portfolio = _useState4[0],
-      setPortfolio = _useState4[1];
+      isLoading = _useState4[0],
+      setLoading = _useState4[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
-    if (!authData.signedIn) {
+    if (!authData.signedIn && authData.didFinishValidatingSignIn) {
       navigate('/login');
     }
 
-    axios__WEBPACK_IMPORTED_MODULE_4___default().get("".concat(appUrl, "/api/coins")).then(function (response) {
-      setPortfolio(response.data.data);
-      return response.data.data;
-    }).then(function (portfolio) {
-      var param = id ? id : portfolio[0];
-      return axios__WEBPACK_IMPORTED_MODULE_4___default().get("https://api.coingecko.com/api/v3/coins/".concat(param), {
-        withCredentials: false
-      });
-    }).then(function (response) {
-      setDisplayCoin(response.data);
-    });
+    if (authData && authData.portfolio && authData.portfolio.length > 0) {
+      var param = id ? id : authData.portfolio[0];
+
+      if (param) {
+        axios__WEBPACK_IMPORTED_MODULE_3___default().get("https://api.coingecko.com/api/v3/coins/".concat(param), {
+          withCredentials: false
+        }).then(function (response) {
+          console.log(response.data);
+          setDisplayCoin(response.data);
+          setLoading(false);
+        });
+        setDisplayCoin(authData.portfolio[0]);
+      }
+    }
   }, [id]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("main", {
     className: "-mt-24 pb-8 mb-auto",
-    children: [portfolio.length === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+    children: [authData.portfolio && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
       children: "A moment please..."
-    }), portfolio.length === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+    }), !authData.portfolio && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
       children: "You have no coins in your portfolio..."
     }), displayCoin && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
       className: "max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8",
@@ -4822,11 +4856,11 @@ var Portfolio = function Portfolio() {
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         className: "grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_Newsfeed__WEBPACK_IMPORTED_MODULE_0__.Newsfeed, {
+        children: [!isLoading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_Newsfeed__WEBPACK_IMPORTED_MODULE_0__.Newsfeed, {
           coin: displayCoin,
           page: "portfolio"
-        }, displayCoin.id), portfolio.length !== 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_PortfolioList__WEBPACK_IMPORTED_MODULE_1__.PortfolioList, {
-          portfolio: portfolio
+        }, displayCoin.id), authData.portfolio.length !== 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_PortfolioList__WEBPACK_IMPORTED_MODULE_1__.PortfolioList, {
+          portfolio: authData.portfolio
         })]
       })]
     })]
