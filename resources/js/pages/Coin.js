@@ -5,13 +5,15 @@ import {TrendingList} from "../components/TrendingList";
 import {useAxios} from "../hooks/useAxios";
 import AuthContext from "../context/authContext";
 import {useNavigate, useParams} from "react-router-dom";
+import {useAuth} from '../hooks/useAuth'
 
 export const Coin = () => {
-    const {authData, setAuthData} = useContext(AuthContext);
+    const {authData} = useContext(AuthContext);
     let { id, timeFrame } = useParams();
     const { response, loading , error } = useAxios(`/coins/${id}`, [id, timeFrame]);
     const appUrl = process.env.MIX_APP_URL;
     const navigate = useNavigate();
+    const {userData, setPortfolio} = useAuth();
 
     const handleButtonClick = () => {
         axios
@@ -26,7 +28,8 @@ export const Coin = () => {
                 }
             })
             .then(() => {
-                navigate('/portfolio')
+                setPortfolio([id, ...userData.portfolio]);
+                navigate('/portfolio');
             })
             .catch(error =>
                 console.log(error.toJSON())

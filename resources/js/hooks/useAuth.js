@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useCallback} from "react";
 import {Cookies} from "react-cookie";
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../context/authContext";
@@ -6,12 +6,12 @@ import AuthContext from "../context/authContext";
 export const useAuth = () => {
     const appUrl = process.env.MIX_APP_URL;
     let navigate = useNavigate();
-    const [userData, setUserdata] = React.useState({signedIn: false, user: null});
-    const {setAuthData} = useContext(AuthContext);
+    // const [userData, setUserdata] = React.useState({signedIn: true, user: null, portfolio: []});
+    const {authData, setAuthData} = useContext(AuthContext);
 
     useEffect(() => {
-        setAuthData(userData);
-    }, [userData.signedIn]);
+        setAuthData(authData);
+    }, [authData.signedIn]);
 
     function getAuthCookieExpiration() {
         let date = new Date();
@@ -22,35 +22,95 @@ export const useAuth = () => {
     function setAsLogged(user) {
         const cookie = new Cookies();
         cookie.set('is_auth', true, {path: '/', expires: getAuthCookieExpiration(), sameSite: 'lax', httpOnly: false});
-        setUserdata({signedIn: true, user});
+        setAuthData((prev) => ({
+            ...prev,
+            signedIn: true,
+            user,
+            didFinishValidatingSignIn: true
+        }))
+
+        axios
+            .get(appUrl + '/api/coins')
+            .then(response => {
+                setAuthData((prev) => ({
+                    ...prev,
+                    portfolio: response.data.data
+                }))
+            })
+            .catch(error => {
+                setLogout();
+            });
+
         navigate('/markets');
     }
 
-    function setLogout() {
+    const setLogout = useCallback(() => {
         const cookie = new Cookies();
         cookie.remove('is_auth', {path: '/', expires: getAuthCookieExpiration(), sameSite: 'lax', httpOnly: false});
-        setUserdata({signedIn: false, user: null});
+        setAuthData({
+            signedIn: false,
+            user: null,
+            didFinishValidatingSignIn: false,
+            portfolio: []
+        });
         navigate('/login');
-    }
+    }, []);
 
-    function loginUserOnStartup() {
+    const loginUserOnStartup = useCallback( () => {
         const cookie = new Cookies();
         if (cookie.get('is_auth')) {
-            axios.post(appUrl + '/api/me').then(response => {
-                setUserdata({signedIn: true, user: response.data});
-            }).catch(error => {
-                setUserdata({signedIn: false, user: null});
-                setLogout();
-            });
+            setAuthData((prev) => ({
+                ...prev,
+                signedIn: true,
+                didFinishValidatingSignIn: true
+            }));
+            axios
+                .post(appUrl + '/api/me')
+                .then(response => {
+                    setAuthData((prev) => ({
+                        ...prev,
+                        signedIn: true,
+                        user: response.data.data,
+                        didFinishValidatingSignIn: true
+                    }))
+                })
+                .catch(error => {
+                    setLogout();
+                });
+
+            axios
+                .get(appUrl + '/api/coins')
+                .then(response => {
+                    setAuthData((prev) => ({
+                        ...prev,
+                        portfolio: response.data.data
+                    }))
+                })
+                .catch(error => {
+                    setLogout();
+                });
         } else {
-            setUserdata({signedIn: false, user: null});
+            setAuthData({
+                signedIn: false,
+                user: null,
+                didFinishValidatingSignIn: false,
+                portfolio: []
+            });
         }
-    }
+    }, [authData]);
+
+    const setPortfolio = useCallback( (newPortfolio) => {
+        setAuthData({
+            ...authData,
+            portfolio: newPortfolio
+        })
+    }, [authData]);
 
     return {
-        userData,
+        authData,
         setAsLogged,
         setLogout,
-        loginUserOnStartup
+        loginUserOnStartup,
+        setPortfolio
     }
 };

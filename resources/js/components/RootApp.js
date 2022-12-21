@@ -5,14 +5,12 @@ import {Layout} from "./Layout";
 import {Markets} from "../pages/Markets";
 import {Login} from "../pages/Login";
 import {Register} from "../pages/Register";
-import {useAuth} from "../hooks/useAuth";
 import AuthContext from "../context/authContext";
 import {Portfolio} from "../pages/Portfolio";
 import {Coin} from "../pages/Coin";
 
 function RootApp() {
-    const {userData} = useAuth();
-    const [authData, setAuthData] = useState({signedIn: userData.signedIn, user: userData.user});
+    const [authData, setAuthData] = useState({signedIn: false, user: null, portfolio: []});
 
     return (
         <AuthContext.Provider value={{authData, setAuthData }}>
